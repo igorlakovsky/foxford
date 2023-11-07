@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SearchCard from './components/SearchCard.vue'
+</script>
 
 <template>
-  <h1 className="text-3xl font-bold underline">Hello world!</h1>
+  <section class="pt-8 h-screen bg-gray-50">
+    <SearchCard></SearchCard>
+  </section>
 </template>
