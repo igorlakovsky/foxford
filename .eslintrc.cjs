@@ -9,7 +9,6 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
   rules: {
-    'vue/attribute-hyphenation': 0,
-    'vue/no-mutating-props': 0,
+    'vue/multi-word-component-names': 0,
   },
 }

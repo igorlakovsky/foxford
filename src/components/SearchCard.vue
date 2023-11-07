@@ -5,12 +5,18 @@ interface Props {
 
 defineProps<Props>()
 defineEmits(['update:modelValue'])
+
+function onLogoClick() {
+  window.open('https://github.com/', '_blank')
+}
 </script>
 
 <template>
-  <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-4 flex flex-wrap justify-between">
-    <img class="h-10 w-32 mb-0 cursor-pointer" src="../assets/github-logo.svg" />
-    <img class="mb-0 cursor-pointer transition-all opacity-30 hover:opacity-80" src="../assets/sun-icon.svg" />
+  <div
+    class="w-full mx-auto bg-white rounded-xl shadow-md p-4 flex flex-wrap justify-between 2xl:max-w-7xl xl:max-w-5xl lg:max-w-4xl md:max-w-2xl max-w-lg"
+  >
+    <img class="h-10 w-32 mb-0 cursor-pointer" src="../assets/github-logo.svg" @click="onLogoClick" />
+    <img class="w-6 mb-0 cursor-pointer transition-all opacity-30 hover:opacity-80" src="../assets/sun-icon.svg" />
     <form class="w-full mt-1">
       <label class="block relative">
         <span class="text-slate-600 font-medium text-sm">Search Repositories</span>
