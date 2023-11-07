@@ -2,9 +2,9 @@
 
 В качестве инструмента сборки используется Vite, технологии для Frontend: Vue + TypeScript + Tailwind CSS
 
-## Запуск приложения
+## Запуск сервера разработки
 
 ```
 npm install
-npm start
+npm run dev
 ```

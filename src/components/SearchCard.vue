@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+interface Props {
+  modelValue: string
+}
+
+defineProps<Props>()
+defineEmits(['update:modelValue'])
+</script>
 
 <template>
   <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-4 flex flex-wrap justify-between">
@@ -9,9 +16,11 @@
         <span class="text-slate-600 font-medium text-sm">Search Repositories</span>
         <input
           type="text"
-          class="w-full px-2 py-1 border border-slate-300 rounded-md shadow-sm transition-all hover:border-slate-500 focus:border-slate-700 focus:shadow-md focus-visible:outline-0"
+          :value="modelValue"
+          class="w-full px-2 py-1 border border-slate-300 rounded-md shadow-sm text-sm transition-all hover:border-slate-500 focus:border-slate-500 focus:shadow-md focus-visible:outline-0"
+          @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         />
-        <img class="absolute bottom-0 right-0 h-5 mb-2 mr-2 color opacity-50" src="../assets/search-icon.svg" />
+        <img class="absolute h-5 bottom-0 right-0 mb-1.5 mr-2 color opacity-30" src="../assets/search-icon.svg" />
       </label>
     </form>
   </div>
