@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios'
+
+import { useRouter, useRoute } from 'vue-router'
 import { ref, watchEffect } from 'vue'
+
 import SearchCard from './components/SearchCard.vue'
 import Spinner from './components/Spinner.vue'
 import RepoCard from './components/RepoCard.vue'
@@ -27,6 +30,9 @@ type SearchData = {
     avatar: string
   }[]
 }
+
+const router = useRouter()
+const route = useRoute()
 
 const searchText = ref('')
 const searchData = ref<SearchData>()
@@ -63,6 +69,13 @@ async function fetchData(repoName: string) {
   if (getRequestQ(responce.config.url!) === searchText.value) {
     searchData.value = getRequestData(responce.data)
     isLoading.value = false
+
+    router.push({
+      name: '',
+      query: {
+        q: searchText.value,
+      },
+    })
   }
 }
 
@@ -79,8 +92,21 @@ watchEffect(() => {
       fetchData(searchText.value)
     }, searchDelay)
   } else {
+    // Если пользователь очистил строку поиска
     isLoading.value = false
     searchData.value = undefined
+
+    router.push({
+      name: '',
+      query: {},
+    })
+  }
+})
+
+// Наблюдаем за query параметрами
+watchEffect(() => {
+  if (route.query.q) {
+    searchText.value = route.query.q as string
   }
 })
 </script>
@@ -90,11 +116,11 @@ watchEffect(() => {
     <SearchCard v-model="searchText"></SearchCard>
     <Spinner v-if="isLoading"></Spinner>
     <div
-      v-else-if="searchData"
-      class="w-full gap-4 2xl:max-w-7xl 2xl:grid-cols-3 xl:max-w-5xl lg:max-w-4xl md:max-w-2xl md:grid-cols-2 max-w-lg m-auto grid grid-cols-1"
+      v-else-if="searchData?.items.length"
+      class="w-full gap-4 2xl:max-w-7xl 2xl:grid-cols-3 xl:max-w-5xl lg:max-w-4xl md:max-w-2xl md:grid-cols-2 max-w-lg mx-auto grid grid-cols-1"
     >
       <RepoCard
-        v-for="(repo, index) in searchData?.items"
+        v-for="(repo, index) in searchData.items"
         :key="index"
         :author="repo.author"
         :name="repo.name"
@@ -104,5 +130,6 @@ watchEffect(() => {
         :avatar="repo.avatar"
       ></RepoCard>
     </div>
+    <div v-else-if="searchData?.total_count === 0" class="text-center text-slate-400 font-medium text-sm">No data</div>
   </section>
 </template>
