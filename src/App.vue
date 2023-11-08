@@ -103,6 +103,7 @@ watch([searchText, page, perPage], () => {
     // Если пользователь очистил строку поиска
     isLoading.value = false
     searchData.value = undefined
+    page.value = 1
 
     router.push({
       name: '',
@@ -126,7 +127,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <section class="py-12 px-4 min-h-screen bg-gray-50 flex flex-col gap-6">
+  <section class="py-12 px-4 min-h-screen bg-gray-50 flex flex-col gap-6 dark:bg-gray-950 transition-all">
     <SearchCard v-model="searchText"></SearchCard>
     <Spinner v-if="isLoading"></Spinner>
     <div v-else-if="searchData?.items.length">

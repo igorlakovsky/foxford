@@ -13,6 +13,9 @@ const $emit = defineEmits(['update:page', 'update:perPage'])
 const showingMin = computed(() => (props.page - 1) * props.perPage + 1)
 const showingMax = computed(() => props.page * props.perPage)
 
+const hasPrev = computed(() => props.page === 1)
+const hasNext = computed(() => props.page * props.perPage > props.totalCount)
+
 function onPrevClick() {
   if (props.page > 1) {
     $emit('update:page', props.page - 1)
@@ -29,8 +32,8 @@ function onNextClick() {
     <!-- Buttons -->
     <div class="inline-flex mt-2 xs:mt-0">
       <button
-        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-40 disabled:hover:bg-gray-800 transition-all"
-        :disabled="props.page === 1"
+        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-400 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-40 disabled:hover:bg-gray-800 transition-all"
+        :disabled="hasPrev"
         @click="onPrevClick"
       >
         <svg
@@ -51,7 +54,8 @@ function onNextClick() {
         Prev
       </button>
       <button
-        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-400 border-0 border-l border-gray-200 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-40 disabled:hover:bg-gray-800 transition-all"
+        :disabled="hasNext"
         @click="onNextClick"
       >
         Next
